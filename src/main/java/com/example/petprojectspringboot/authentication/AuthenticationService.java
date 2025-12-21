@@ -26,9 +26,11 @@ public class AuthenticationService {
     private final RedisStoreRepository redisStoreRepository;
 
     public Map<String,Object> signIn(AuthenticationRequest authenticationRequest) {
+
         if(authenticationRequest.getUsername()==null || authenticationRequest.getPassword()==null){
             throw  new RuntimeException("Invalid username or password");
         }
+
         UserEntity userEntity=userRepository.findByUsername(authenticationRequest.getUsername());
 
         if(userEntity==null){
@@ -55,7 +57,7 @@ public class AuthenticationService {
     }
 
     public UserEntity signUp(AuthenticationRequest authenticationRequest) {
-
+    try{
         if(authenticationRequest.getUsername()==null || authenticationRequest.getPassword()==null){
             throw  new RuntimeException("Invalid username or password");
         }
@@ -69,7 +71,12 @@ public class AuthenticationService {
         userEntity.setUsername(authenticationRequest.getUsername());
         userEntity.setPassword(bCryptPasswordEncoder.encode(authenticationRequest.getPassword()));
         userEntity=userRepository.saveAndFlush(userEntity);
+
         return userEntity;
+    }catch (Exception e){
+        System.out.println(e.getMessage());
+    }
+    return  null;
     }
 
     public void signOut(String token) {
@@ -77,6 +84,7 @@ public class AuthenticationService {
             throw  new RuntimeException("Invalid token");
 
         }
+
         Claims claims= jwtTokenUtils.parseToken(token);
 
         if(claims==null){
