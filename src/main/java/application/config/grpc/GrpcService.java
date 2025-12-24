@@ -2,16 +2,16 @@ package application.config.grpc;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import test.proto.HelloReply;
+import test.proto.HelloRequest;
+import test.proto.TestSimpleGrpc;
 
-import application.proto.HelloReply;
-import application.proto.HelloRequest;
-import application.proto.SimpleGrpc;
 
 @AllArgsConstructor
 @Service
 public class GrpcService {
 
-    private final SimpleGrpc.SimpleBlockingStub stub;
+    private final TestSimpleGrpc.TestSimpleBlockingStub stub;
 
     public String sayHello(String name) {
         HelloRequest request = HelloRequest.newBuilder()

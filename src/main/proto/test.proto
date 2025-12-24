@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package test;  // ⚠️ Thêm dòng này!
+
+option java_multiple_files = true;
+option java_package = "test.proto";
+option java_outer_classname = "TestProto";
+
+service TestSimple {
+  rpc SayHello(HelloRequest) returns (HelloReply) {}
+  rpc StreamHello(HelloRequest) returns (stream HelloReply) {}
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}

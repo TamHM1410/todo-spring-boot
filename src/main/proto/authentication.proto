@@ -1,0 +1,31 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";  // ⭐ Import Empty
+
+package authentication;  // ⚠️ Thêm dòng này!
+
+option java_multiple_files = true;
+option java_package = "authentication.proto";
+option java_outer_classname = "Authentication";
+
+
+service AuthenticationSimple {
+  rpc SignIn(AuthenticationRequestSimple) returns (AuthenticationResponseSimple) {}
+  rpc signUp(AuthenticationRequestSimple) returns (AuthenticationResponseSimple) {}
+  rpc SignOut(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+}
+
+message AuthenticationRequestSimple{
+   string username=1;
+   string password=2;
+   string email=3;
+}
+
+
+message AuthenticationResponseSimple{
+  string username=1;
+  string email=3;
+  string token=4;
+}
+
+

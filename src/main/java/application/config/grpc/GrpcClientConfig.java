@@ -1,31 +1,43 @@
 package application.config.grpc;
 
+import authentication.proto.AuthenticationSimpleGrpc;
 import io. grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation. Bean;
 import org.springframework. context.annotation.Configuration;
 
-import application.proto.SimpleGrpc;
+import test.proto.TestSimpleGrpc;
 
 @Configuration
 public class GrpcClientConfig {
 
+    @Value("${channel.authentication.host}")
+    private String authenticationHost;
+
+    @Value("${channel.authentication.port}")
+    private int authenticationPort;
+
     @Bean
     public ManagedChannel managedChannel() {
         return ManagedChannelBuilder
-                .forAddress("localhost", 12051) // ⚠️ Sửa từ 9090 -> 50051
+                .forAddress(authenticationHost, authenticationPort)
                 .usePlaintext()
                 .build();
     }
 
     @Bean
-    public SimpleGrpc.SimpleBlockingStub simpleBlockingStub(ManagedChannel channel) {
-        return SimpleGrpc.newBlockingStub(channel);
+    public TestSimpleGrpc.TestSimpleBlockingStub simpleBlockingStub(ManagedChannel channel) {
+        return TestSimpleGrpc.newBlockingStub(channel);
+    }
+    @Bean
+    public AuthenticationSimpleGrpc.AuthenticationSimpleBlockingStub authenticationBlockingStub(ManagedChannel channel) {
+        return AuthenticationSimpleGrpc.newBlockingStub(channel);
     }
 
     // Thêm stub cho streaming
-    @Bean
-    public SimpleGrpc.SimpleStub simpleStub(ManagedChannel channel) {
-        return SimpleGrpc.newStub(channel);
-    }
+//    @Bean
+//    public TestSimpleGrpc.TestSimpleStub simpleStub(ManagedChannel channel) {
+//        return TestSimpleGrpc.newStub(channel);
+//    }
 }

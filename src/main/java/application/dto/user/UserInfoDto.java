@@ -1,17 +1,16 @@
-package application.authentication.data;
+package application.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthenticationRequest {
-    //sign in
+public class UserInfoDto {
+
     private String username;
-    private String password;
+    private String name;
 
-    //sign up
-    private String email;
 
+    private String token;
 
 }

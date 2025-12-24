@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/public/**","/authentication/**","/auth/**","/ws/**").permitAll()
+                                .requestMatchers("/api/v1/public/**","/api/v1/authentication/**","/auth/**","/ws/**").permitAll()
                                 .anyRequest().authenticated());
                 http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

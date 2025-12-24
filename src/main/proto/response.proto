@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+package response; // package trong proto
+
+option java_multiple_files = true;
+option java_package = "application.response"; // ✅ đúng chuẩn Java package
+option java_outer_classname = "ResponseWrapperProto"; // class wrapper
+
+message ResponseWrapper {
+  bool success = 1;
+  string message = 2;
+  string error_code = 3;
+  google.protobuf.Any data = 4;
+}
